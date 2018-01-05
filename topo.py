@@ -130,8 +130,8 @@ class Topo():
             print(swport.coord)
 
 
-topo=Topo([4,4,4,3,2,2],'input\summary.log')
-topo.run()
+# topo=Topo([4,4,4,3,2,2],'input\summary.log')
+# topo.run()
 # topo.locateJobs()
 # topo.testRoute()
 # print(topo.routes[0].name)
