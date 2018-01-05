@@ -1,0 +1,11 @@
+        # for i in range(0,self.dimensions[0]//2):  #z
+        #     for j in range(0,self.dimensions[1]):   #y
+        #         # load_moudle=LoadMoudle(filename)  
+        #         offset=self.hosts.index(self.swports[i][j][0][0][0][0][0])
+        #         array=[]
+        #         self.jobs.append(array)    
+        #         for idx in range(0,self.load_moudle.getProcessorNum()):
+        #             hostnum=self.dimensions[2]*self.dimensions[3]*self.dimensions[4]*self.dimensions[5]
+        #             index=idx%hostnum
+        #             self.jobs[i*self.dimensions[1]+j].append(self.hosts[offset+index])
+                    # print(self.jobs[i*self.dimensions[1]+j][idx].coord) 
