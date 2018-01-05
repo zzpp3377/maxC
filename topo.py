@@ -2,7 +2,7 @@ from swport import SwPort
 from route import Route,Dor,DorBiu,Dorx
 from loadmoudle import LoadMoudle
 from path import Path
-from locater import SmallLocater,LargeLocater
+from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
 
 class Topo():
     """the Topo class represent the topology of network"""
@@ -17,7 +17,13 @@ class Topo():
         self.hosts=[] 
         self.jobs=[]
         self.load_moudle=LoadMoudle(loadfile)
-        self.locater={'SmallLocater':SmallLocater('SmallLocater'),'LargeLocater':LargeLocater('LargeLocater')}
+        self.locater={'SmallLocater':SmallLocater('SmallLocater'),
+                        'LargeLocater':LargeLocater('LargeLocater'),
+                        'HalfLocater':HalfLocater('HalfLocater'),
+                        'QuarterLocater':QuarterLocater('QuarterLocater'),
+                        'NearSmallLocater':NearSmallLocater('NearSmallLocater'),
+                        'NearLargeLocater':NearLargeLocater('NearLargeLocater')
+                    }
         #make topo
         for i in range(0,dimensions[0]):    #z
             array1=[]
@@ -130,9 +136,9 @@ class Topo():
             print(swport.coord)
 
 
-# topo=Topo([4,4,4,3,2,2],'input\summary.log')
+topo=Topo([4,4,4,3,2,2],'input\summary.log')
 # topo.run()
-# topo.locateJobs('LargeLocater')
+topo.locateJobs('NearLargeLocater')
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()
