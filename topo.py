@@ -2,7 +2,7 @@ from swport import SwPort
 from route import Route,Dor,DorBiu,Dorx
 from loadmoudle import LoadMoudle
 from path import Path
-from locater import SmallLocater
+from locater import SmallLocater,LargeLocater
 
 class Topo():
     """the Topo class represent the topology of network"""
@@ -17,7 +17,7 @@ class Topo():
         self.hosts=[] 
         self.jobs=[]
         self.load_moudle=LoadMoudle(loadfile)
-        self.locater=SmallLocater('SmallLocater')
+        self.locater={'SmallLocater':SmallLocater('SmallLocater'),'LargeLocater':LargeLocater('LargeLocater')}
         #make topo
         for i in range(0,dimensions[0]):    #z
             array1=[]
@@ -46,10 +46,10 @@ class Topo():
                                         self.hosts.append(sw_port)
                                     # print(self.swports[i][j][k][l][m][n][p].coord)
 
-    def locateJobs(self):
+    def locateJobs(self,locater_name):
         """locate the job on hosts"""
         proc_num=self.load_moudle.getProcessorNum()
-        self.locater.locate(self.dimensions,self.hosts,self.swports,proc_num,self.jobs)                 
+        self.locater[locater_name].locate(self.dimensions,self.hosts,self.swports,proc_num,self.jobs)                 
                     
     def allRoute(self,route_name):
         """according to the route algorithm and traffic pattern, init the topo matrix"""
@@ -107,7 +107,7 @@ class Topo():
                 out_file_p.write(str(coord)+'\n')
 
     def run(self):
-        self.locateJobs()
+        self.locateJobs('LargeLocater')
         self.allRoute('dor')
         self.updateAllPortLoad()
         self.getStatistics()
@@ -132,7 +132,7 @@ class Topo():
 
 # topo=Topo([4,4,4,3,2,2],'input\summary.log')
 # topo.run()
-# topo.locateJobs()
+# topo.locateJobs('LargeLocater')
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()
