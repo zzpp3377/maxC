@@ -1,14 +1,21 @@
 {
-	"loadfile":"input\summary.log",
-	"dimensions":{
-		"z":4,
-		"y":4,
-		"x":4,
-		"b":3,
-		"c":2,
-		"a":2
-	},
-	"route":"dor",
-	"locater":"SmallLocater",
-	"offset":0
+"loadfile":"input\\summary.log",
+
+"route":{
+	"name":"dor",
+	"usedlinks":6
+},
+"locater":{
+	"name":"SmallLocater",
+	"location":0
+},
+"offset":0,
+"dimensions":{
+	"z":4,
+	"y":4,
+	"x":4,
+	"b":3,
+	"c":2,
+	"a":2
+}
 }

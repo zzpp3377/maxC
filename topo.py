@@ -3,44 +3,48 @@ from route import Route,Dor,DorBiu,Dorx
 from loadmoudle import LoadMoudle
 from path import Path
 from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
+from loadconfig import LoadConfig
 
 class Topo():
     """the Topo class represent the topology of network"""
     
-    def __init__(self,dimensions,loadfile):
+    def __init__(self,load_config):
         """this dimensions must be a 6 elements list"""
         self.paths=[]
-        self.routes={'dor':Dor('dor',dimensions),'dorbiu':DorBiu('dorbiu',dimensions,6,0),'dorx':Dorx('dorx',dimensions,0)}
-        self.dimensions=dimensions
+        self.dimensions=load_config.getDimensions()
+        self.routes={'dor':Dor('dor',self.dimensions),
+                        'dorbiu':DorBiu('dorbiu',self.dimensions,load_config.getRouteUsedLinks(),load_config.getOffset()),
+                        'dorx':Dorx('dorx',self.dimensions,load_config.getOffset())}
         self.swports=[]
         self.line_swports=[]
         self.hosts=[] 
         self.jobs=[]
-        self.load_moudle=LoadMoudle(loadfile)
+        self.load_moudle=LoadMoudle(load_config.getLoadFile())
         self.locater={'SmallLocater':SmallLocater('SmallLocater'),
                         'LargeLocater':LargeLocater('LargeLocater'),
-                        'HalfLocater':HalfLocater('HalfLocater',2),
-                        'QuarterLocater':QuarterLocater('QuarterLocater',2),
+                        'HalfLocater':HalfLocater('HalfLocater',load_config.getLocaterLocation()),
+                        'QuarterLocater':QuarterLocater('QuarterLocater',load_config.getLocaterLocation()),
                         'NearSmallLocater':NearSmallLocater('NearSmallLocater'),
                         'NearLargeLocater':NearLargeLocater('NearLargeLocater')
                     }
+        self.load_config=load_config
         #make topo
-        for i in range(0,dimensions[0]):    #z
+        for i in range(0,self.dimensions[0]):    #z
             array1=[]
             self.swports.append(array1)
-            for j in range(0,dimensions[1]):    #y
+            for j in range(0,self.dimensions[1]):    #y
                 array2=[]
                 self.swports[i].append(array2)
-                for k in range(0,dimensions[2]):    #x
+                for k in range(0,self.dimensions[2]):    #x
                     array3=[]
                     self.swports[i][j].append(array3)
-                    for l in range(0,dimensions[3]):    #b
+                    for l in range(0,self.dimensions[3]):    #b
                         array4=[]
                         self.swports[i][j][k].append(array4)
-                        for m in range(0,dimensions[4]):    #c
+                        for m in range(0,self.dimensions[4]):    #c
                             array5=[]
                             self.swports[i][j][k][l].append(array5)
-                            for n in range(0,dimensions[5]):    #a
+                            for n in range(0,self.dimensions[5]):    #a
                                 array6=[]
                                 self.swports[i][j][k][l][m].append(array6)
                                 for p in range(0,12):       #0->nic,1->x+,2->x-,3->y+,4->y-,5->z+,6->z-,7->a,8->c,9->b+,10->b-,11->m
@@ -113,8 +117,8 @@ class Topo():
                 out_file_p.write(str(coord)+'\n')
 
     def run(self):
-        self.locateJobs('LargeLocater')
-        self.allRoute('dor')
+        self.locateJobs(self.load_config.getLocaterName())
+        self.allRoute(self.load_config.getRouteName())
         self.updateAllPortLoad()
         self.getStatistics()
 
@@ -136,9 +140,9 @@ class Topo():
             print(swport.coord)
 
 
-topo=Topo([4,4,4,3,2,2],'input\summary.log')
+# topo=Topo([4,4,4,3,2,2],'input\summary.log')
 # topo.run()
-topo.locateJobs('QuarterLocater')
+# topo.locateJobs('QuarterLocater')
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()

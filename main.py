@@ -1,4 +1,6 @@
 from topo import Topo
+from loadconfig import LoadConfig
 
-topo=Topo([4,4,4,3,2,2],'input\summary.log')
+loadconfig=LoadConfig('config\configure.txt')
+topo=Topo(loadconfig)
 topo.run()
