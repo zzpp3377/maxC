@@ -19,8 +19,8 @@ class Topo():
         self.load_moudle=LoadMoudle(loadfile)
         self.locater={'SmallLocater':SmallLocater('SmallLocater'),
                         'LargeLocater':LargeLocater('LargeLocater'),
-                        'HalfLocater':HalfLocater('HalfLocater'),
-                        'QuarterLocater':QuarterLocater('QuarterLocater'),
+                        'HalfLocater':HalfLocater('HalfLocater',2),
+                        'QuarterLocater':QuarterLocater('QuarterLocater',2),
                         'NearSmallLocater':NearSmallLocater('NearSmallLocater'),
                         'NearLargeLocater':NearLargeLocater('NearLargeLocater')
                     }
@@ -138,7 +138,7 @@ class Topo():
 
 topo=Topo([4,4,4,3,2,2],'input\summary.log')
 # topo.run()
-topo.locateJobs('NearLargeLocater')
+topo.locateJobs('QuarterLocater')
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()

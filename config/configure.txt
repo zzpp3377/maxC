@@ -1,0 +1,14 @@
+{
+	"loadfile":"input\summary.log",
+	"dimensions":{
+		"z":4,
+		"y":4,
+		"x":4,
+		"b":3,
+		"c":2,
+		"a":2
+	},
+	"route":"dor",
+	"locater":"SmallLocater",
+	"offset":0
+}
