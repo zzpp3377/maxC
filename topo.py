@@ -4,6 +4,7 @@ from loadmoudle import LoadMoudle
 from path import Path
 from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
 from loadconfig import LoadConfig
+import os
 
 class Topo():
     """the Topo class represent the topology of network"""
@@ -71,8 +72,9 @@ class Topo():
                     load=self.load_moudle.loadTraffic(src,dst)
                     # print(load)
                     # print('src:'+str(coord_src)+'\tdst:'+str(coord_dst))
-                    path=self.routes[route_name].routing(coord_src,coord_dst,load,self.swports)
-                    self.paths.append(path)
+                    if load!=0:
+                        path=self.routes[route_name].routing(coord_src,coord_dst,load,self.swports)
+                        self.paths.append(path)
                     # for swport in path.swports:
                         # print(swport.coord)
     
@@ -91,28 +93,41 @@ class Topo():
         histogram_optical={}
         histogram_0load=[]
         for swport in self.line_swports:
-            if swport.coord[6]!=11 : 
-                if swport.port_load in histogram_electric.keys():
-                    histogram_electric[swport.port_load]=histogram_electric[swport.port_load]+1
+            if swport.coord[6]!=11 :
+                port_load=swport.port_load//1
+                if port_load in histogram_electric.keys():
+                    histogram_electric[port_load]=histogram_electric[port_load]+1
                 else:
-                    histogram_electric[swport.port_load]=1
+                    histogram_electric[port_load]=1 
+                # if swport.port_load in histogram_electric.keys():
+                #     histogram_electric[swport.port_load]=histogram_electric[swport.port_load]+1
+                # else:
+                #     histogram_electric[swport.port_load]=1
             else:
-                if swport.port_load in histogram_optical.keys():
-                    histogram_optical[swport.port_load]=histogram_optical[swport.port_load]+1
+                port_load=swport.port_load//1
+                if port_load in histogram_optical.keys():
+                    histogram_optical[port_load]=histogram_optical[port_load]+1
                 else:
-                    histogram_optical[swport.port_load]=1
+                    histogram_optical[port_load]=1
+                # if swport.port_load in histogram_optical.keys():
+                #     histogram_optical[swport.port_load]=histogram_optical[swport.port_load]+1
+                # else:
+                #     histogram_optical[swport.port_load]=1
             if swport.port_load==0 :
                 histogram_0load.append(swport.coord)
                 # print(str(swport.coord))
-
-        with open('output/histogram_electric.txt','w') as out_file_p:
+        
+        outputpath=self.load_config.getOutputPath()
+        if not os.path.exists(outputpath):
+            os.makedirs(outputpath) 
+        with open(str(outputpath)+'histogram_electric.txt','w') as out_file_p:
             for key in sorted(histogram_electric.keys()):
                 # print(str(key)+"\t"+str(histogram[key]))
                 out_file_p.write(str(key)+"\t"+str(histogram_electric[key])+"\n")
-        with open('output/histogram_optical.txt','w') as out_file_p:
+        with open(str(outputpath)+'histogram_optical.txt','w') as out_file_p:
             for key in sorted(histogram_optical.keys()):
                 out_file_p.write(str(key)+"\t"+str(histogram_optical[key])+"\n")
-        with open('output/histogram_0load.txt','w') as out_file_p:
+        with open(str(outputpath)+'histogram_0load.txt','w') as out_file_p:
             for coord in histogram_0load:
                 out_file_p.write(str(coord)+'\n')
 

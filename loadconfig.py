@@ -47,6 +47,9 @@ class LoadConfig():
     def getOffset(self):
         return self.config_param['offset']
 
+    def getOutputPath(self):
+        return self.config_param['outputpath']
+
 
 
 # loadconfig=LoadConfig('config\configure.txt')
