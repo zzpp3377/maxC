@@ -105,22 +105,26 @@ class Topo():
                 histogram_0load.append(swport.coord)
                 # print(str(swport.coord))
 
-        with open('output\histogram_electric.txt','w') as out_file_p:
+        with open('output/histogram_electric.txt','w') as out_file_p:
             for key in sorted(histogram_electric.keys()):
                 # print(str(key)+"\t"+str(histogram[key]))
                 out_file_p.write(str(key)+"\t"+str(histogram_electric[key])+"\n")
-        with open('output\histogram_optical.txt','w') as out_file_p:
+        with open('output/histogram_optical.txt','w') as out_file_p:
             for key in sorted(histogram_optical.keys()):
                 out_file_p.write(str(key)+"\t"+str(histogram_optical[key])+"\n")
-        with open('output\histogram_0load.txt','w') as out_file_p:
+        with open('output/histogram_0load.txt','w') as out_file_p:
             for coord in histogram_0load:
                 out_file_p.write(str(coord)+'\n')
 
     def run(self):
         self.locateJobs(self.load_config.getLocaterName())
+        print('locate jobs success!!!')
         self.allRoute(self.load_config.getRouteName())
+        print("route success!!!")
         self.updateAllPortLoad()
+        print("update port load success!!!")
         self.getStatistics()
+        print("get statistic success!!!")
 
     def testRoute(self):
         """method to test the route algorithm"""

@@ -155,7 +155,7 @@ class QuarterLocater(Locater):
         for i in range(0,dimensions[0]//2):  #z
             for j in range(0,dimensions[1]):   #y
                 #first half
-                print('job :'+str(job_index)+'.1')
+                # print('job :'+str(job_index)+'.1')
                 location_x1=0       #location x is the start x coordinate of switch groups
                 location_x2=dimensions[2]//2-self.location
                 
@@ -174,11 +174,11 @@ class QuarterLocater(Locater):
                     else:
                         index=idx%hostnum
                         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                    print(jobs[job_index][idx].coord)
+                    # print(jobs[job_index][idx].coord)
                 job_index=job_index+1  
 
                 #second half
-                print('job :'+str(job_index)+'.2')
+                # print('job :'+str(job_index)+'.2')
                 location_x1=dimensions[2]//4     #location x is the start x coordinate of switch groups
                 location_x2=dimensions[2]//2+dimensions[2]//4-self.location 
                 
@@ -197,11 +197,11 @@ class QuarterLocater(Locater):
                     else:
                         index=idx%hostnum
                         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                    print(jobs[job_index][idx].coord)
+                    # print(jobs[job_index][idx].coord)
                 job_index=job_index+1  
 
                 #third half
-                print('job :'+str(job_index)+'.3')
+                # print('job :'+str(job_index)+'.3')
                 location_x1=2*dimensions[2]//4     #location x is the start x coordinate of switch groups
                 location_x2=(0+dimensions[2]-self.location)%dimensions[2] 
                 
@@ -220,11 +220,11 @@ class QuarterLocater(Locater):
                     else:
                         index=idx%hostnum
                         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                    print(jobs[job_index][idx].coord)
+                    # print(jobs[job_index][idx].coord)
                 job_index=job_index+1   
 
                 #forth half
-                print('job :'+str(job_index)+'.4')
+                # print('job :'+str(job_index)+'.4')
                 location_x1=3*dimensions[2]//4     #location x is the start x coordinate of switch groups
                 location_x2=(dimensions[2]//4+dimensions[2]-self.location)%dimensions[2] 
                 
@@ -243,7 +243,7 @@ class QuarterLocater(Locater):
                     else:
                         index=idx%hostnum
                         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                    print(jobs[job_index][idx].coord)
+                    # print(jobs[job_index][idx].coord)
                 job_index=job_index+1            
 
 class NearSmallLocater(Locater):
@@ -292,7 +292,7 @@ class NearLargeLocater(Locater):
                 base_index3=hosts.index(swports[i][near_j][0][0][0][0][0])
                 base_index4=hosts.index(swports[near_i][j][0][0][0][0][0])
                 array=[]
-                print('job :'+str(job_index))          
+                # print('job :'+str(job_index))          
                 jobs.append(array)    
                 for proc_idx in range(0,proc_num):              
                     if proc_idx%(4*hostnum)<hostnum :          # 4 is the magic number for small pattern    
@@ -307,5 +307,5 @@ class NearLargeLocater(Locater):
                     else:
                         index=proc_idx%hostnum
                         jobs[job_index].append(hosts[base_index4+index])
-                    print(jobs[job_index][proc_idx].coord)  
+                    # print(jobs[job_index][proc_idx].coord)  
                 job_index=job_index+1         
