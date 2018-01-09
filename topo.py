@@ -3,6 +3,7 @@ from route import Route,Dor,DorBiu,Dorx
 from loadmoudle import LoadMoudle
 from path import Path
 from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
+from locater import SmallLocaterOneJob,LargeLocaterOneJob,HalfLocaterOneJob,QuarterLocaterOneJob,NearSmallLocaterOneJob,NearLargeLocaterOneJob
 from loadconfig import LoadConfig
 import os
 
@@ -14,7 +15,7 @@ class Topo():
         self.paths=[]
         self.dimensions=load_config.getDimensions()
         self.routes={'dor':Dor('dor',self.dimensions),
-                        'dorbiu':DorBiu('dorbiu',self.dimensions,load_config.getRouteUsedLinks(),load_config.getOffset()),
+                        'dorbiu':DorBiu('dorbiu',self.dimensions,load_config.getRouteUsedLinks(),load_config.getOpticalWeight(),load_config.getOffset()),
                         'dorx':Dorx('dorx',self.dimensions,load_config.getOffset())}
         self.swports=[]
         self.line_swports=[]
@@ -26,7 +27,14 @@ class Topo():
                         'HalfLocater':HalfLocater('HalfLocater',load_config.getLocaterLocation()),
                         'QuarterLocater':QuarterLocater('QuarterLocater',load_config.getLocaterLocation()),
                         'NearSmallLocater':NearSmallLocater('NearSmallLocater'),
-                        'NearLargeLocater':NearLargeLocater('NearLargeLocater')
+                        'NearLargeLocater':NearLargeLocater('NearLargeLocater'),
+
+                        'SmallLocaterOneJob':SmallLocaterOneJob('SmallLocaterOneJob'),
+                        'LargeLocaterOneJob':LargeLocaterOneJob('LargeLocaterOneJob'),
+                        'HalfLocaterOneJob':HalfLocaterOneJob('HalfLocaterOneJob',load_config.getLocaterLocation()),
+                        'QuarterLocaterOneJob':QuarterLocaterOneJob('QuarterLocaterOneJob',load_config.getLocaterLocation()),
+                        'NearSmallLocaterOneJob':NearSmallLocaterOneJob('NearSmallLocaterOneJob'),
+                        'NearLargeLocaterOneJob':NearLargeLocaterOneJob('NearLargeLocaterOneJob'),
                     }
         self.load_config=load_config
         #make topo
@@ -152,16 +160,17 @@ class Topo():
         # coord_src=[0,0,2,0,0,0,0]
         # coord_dst=[0,0,7,0,0,0,0]
         load=1
-        # path=self.routes[0].routing(coord_src,coord_dst,load,self.swports)
-        path=self.routes[1].routing(coord_src,coord_dst,load,self.swports)
-        # path=self.routes[2].routing(coord_src,coord_dst,load,self.swports)
+        # path=self.routes['dor'].routing(coord_src,coord_dst,load,self.swports)
+        path=self.routes['dorbiu'].routing(coord_src,coord_dst,load,self.swports)
+        # path=self.routes['dorx'].routing(coord_src,coord_dst,load,self.swports)
         for swport in path.swports:
             print(swport.coord)
 
 
-# topo=Topo([4,4,4,3,2,2],'input\summary.log')
+# loadconfig=LoadConfig('config\configure.txt')
+# topo=Topo(loadconfig)
 # topo.run()
-# topo.locateJobs('QuarterLocater')
+# topo.locateJobs('SmallLocaterOneJob')
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()

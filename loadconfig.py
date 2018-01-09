@@ -50,6 +50,9 @@ class LoadConfig():
     def getOutputPath(self):
         return self.config_param['outputpath']
 
+    def getOpticalWeight(self):
+        return self.config_param['route']['opticalweight']
+
 
 
 # loadconfig=LoadConfig('config\configure.txt')
@@ -60,6 +63,7 @@ class LoadConfig():
 # print(loadconfig.getOffset())
 # print(loadconfig.getRouteName())
 # print(loadconfig.getRouteUsedLinks())
+# print(loadconfig.getOpticalWeight())
 
 # out={"file":"out\\123.txt"}
 # print("out/123.txt")

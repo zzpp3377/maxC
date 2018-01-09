@@ -92,10 +92,11 @@ class Dor(Route):
 
 class DorBiu(Route):
     """this is the dorbiu class"""
-    def __init__(self,name,dimensions,links,offset):
+    def __init__(self,name,dimensions,links,optical_weight,offset):
         super().__init__(name)
         self.dimensions=dimensions
         self.links=links
+        self.optical_weight=optical_weight
         self.dor=Dor('dor',dimensions)
         self.offset=offset
         self.comm_sw_map=[      #dimension order: bca;[dst_b,dst_c,dst_a,comm_b,comm_c,comm_a]
@@ -228,7 +229,7 @@ class DorBiu(Route):
         """given a source coordinate and a destination coordinate, return the step number"""
         comm_sw=self.__getCommSw__(dst)
         brother_sw=self.__getBrotherSw__(comm_sw)
-        step=self.dor.getStepNum(src,brother_sw)+1+self.dor.getStepNum(comm_sw,dst)  #the number 1 is the step on optical link
+        step=self.dor.getStepNum(src,brother_sw)+self.optical_weight+self.dor.getStepNum(comm_sw,dst)  #the number 1 is the step on optical link
         return step
 
     def dorBiuRouting(self,src,dst,load,topo_swports):

@@ -1,20 +1,21 @@
 {
 "loadfile":"input/summary.log",
 "route":{
-	"name":"dorx",
-	"usedlinks":6
+	"name":"dorbiu",
+	"usedlinks":6,
+	"opticalweight":100
 },
 "locater":{
-	"name":"NearLargeLocater",
+	"name":"LargeLocater",
 	"location":0
 },
 "offset":0,
 "dimensions":{
-	"z":2,
+	"z":8,
 	"y":6,
-	"x":4,
-	"b":3,
+	"x":8,
 	"c":2,
+	"b":3,
 	"a":2
 },
 "outputpath":"output/"
