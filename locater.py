@@ -596,13 +596,13 @@ class CubeLocater(Locater):
                                         for a in range(0,2):
                                             host_in_this_job.append(swports[z%dimensions[0]][y%dimensions[1]][x%dimensions[2]][b%dimensions[3]][c%dimensions[4]][a%dimensions[5]][0])
                     this_job=[]
-                    print('job:'+str(job_index))
+                    # print('job:'+str(job_index))
                     for idx in range(0,proc_num):
                         this_job.append(host_in_this_job[idx%len(host_in_this_job)])
                     jobs.append(this_job)
 
-                    for idx in range(0,proc_num):
-                        print(jobs[job_index][idx].coord)
+                    # for idx in range(0,proc_num):
+                    #     print(jobs[job_index][idx].coord)
                     
                     job_index=job_index+1 
 

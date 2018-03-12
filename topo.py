@@ -182,12 +182,12 @@ class Topo():
             print(swport.coord)
 
 
-loadconfig=LoadConfig('config\configure.txt')
-topo=Topo(loadconfig)
-print("start")
-# topo.run()
-topo.locateJobs('CubeLocater')
-print("end")
+# loadconfig=LoadConfig('config\configure.txt')
+# topo=Topo(loadconfig)
+# print("start")
+# # topo.run()
+# topo.locateJobs('CubeLocater')
+# print("end")
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()
