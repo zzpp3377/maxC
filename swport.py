@@ -1,4 +1,7 @@
-
+################################
+#swport.py 
+#switch port moudle
+################################
 class SwPort():
     """the SwPort class represent """
 

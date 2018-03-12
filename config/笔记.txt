@@ -1,0 +1,8 @@
+路由方法：dor，dorbiu，dorx
+部署器：SmallLocater，LargeLocater，HalfLocater，
+	QuarterLocater，NearSmallLocater，NearLargeLocater，
+	SmallLocaterOneJob，LargeLocaterOneJob，
+	HalfLocaterOneJob，QuarterLocaterOneJob，
+	NearSmallLocaterOneJob，NearLargeLocaterOneJob
+
+	

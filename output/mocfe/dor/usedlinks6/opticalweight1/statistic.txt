@@ -1,0 +1,3 @@
+average:221.78656684027777
+column 2 max:6144.0
+column 1 max:759.0

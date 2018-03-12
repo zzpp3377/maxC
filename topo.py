@@ -1,9 +1,15 @@
+
+####################################
+#topo.py
+#build a torus topology
+####################################
 from swport import SwPort
 from route import Route,Dor,DorBiu,Dorx
 from loadmoudle import LoadMoudle
 from path import Path
 from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
 from locater import SmallLocaterOneJob,LargeLocaterOneJob,HalfLocaterOneJob,QuarterLocaterOneJob,NearSmallLocaterOneJob,NearLargeLocaterOneJob
+from locater import AllLocater
 from loadconfig import LoadConfig
 import os
 
@@ -35,9 +41,11 @@ class Topo():
                         'QuarterLocaterOneJob':QuarterLocaterOneJob('QuarterLocaterOneJob',load_config.getLocaterLocation()),
                         'NearSmallLocaterOneJob':NearSmallLocaterOneJob('NearSmallLocaterOneJob'),
                         'NearLargeLocaterOneJob':NearLargeLocaterOneJob('NearLargeLocaterOneJob'),
+                        'AllLocater':AllLocater('AllLocater'),
                     }
         self.load_config=load_config
         #make topo
+        # this represent a 6d-torus
         for i in range(0,self.dimensions[0]):    #z
             array1=[]
             self.swports.append(array1)
@@ -87,16 +95,19 @@ class Topo():
                         # print(swport.coord)
     
     def updatePortLoad(self,path):
+        """update the load of ports in network"""
         for swport in path.swports:
             # print(str(swport.port_load)+"\t:\t"+str(path.path_load))
             swport.port_load=swport.port_load+path.path_load
     
     def updateAllPortLoad(self):
+        """update the load of all ports in network"""
         for path in self.paths:
             self.updatePortLoad(path)
         # for swport in self.line_swports:
             # print('coordinate:'+str(swport.coord)+"\tload:"+str(swport.port_load))
     def getStatistics(self):
+        """write statistics to output file"""
         histogram_electric={}
         histogram_optical={}
         histogram_0load=[]
@@ -140,6 +151,7 @@ class Topo():
                 out_file_p.write(str(coord)+'\n')
 
     def run(self):
+        """method to call by main"""
         self.locateJobs(self.load_config.getLocaterName())
         print('locate jobs success!!!')
         self.allRoute(self.load_config.getRouteName())
@@ -170,7 +182,7 @@ class Topo():
 # loadconfig=LoadConfig('config\configure.txt')
 # topo=Topo(loadconfig)
 # topo.run()
-# topo.locateJobs('SmallLocaterOneJob')
+# topo.locateJobs('AllLocater')
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()

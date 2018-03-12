@@ -1,4 +1,7 @@
-
+############################
+#locater.py 
+#locate algorithm
+############################
 class Locater():
     """this is the class wihch maps process to host"""
     def __init__(self,name):
@@ -9,6 +12,7 @@ class Locater():
 
 class SmallLocater(Locater):
     """this is the class which maps process to host with 'small pattern'"""
+    """将应用部署在两组X维度上连续且Y、Z维度上欧拉距离最远的硅元"""
     def __init__(self,name):
         super().__init__(name)
     
@@ -38,6 +42,7 @@ class SmallLocater(Locater):
 
 class LargeLocater(Locater):
     """this is the class which maps process to host with 'large pattern'"""
+    """将应用部署在X维度上连续，Y、Z维度上最远的四组硅元上.应用所占的终端个数是SmallLocater的2倍，可以看作是两个SmallLocater所部署的应用的组合"""
     def __init__(self,name):
         super().__init__(name)
 
@@ -73,6 +78,7 @@ class LargeLocater(Locater):
 
 class HalfLocater(Locater):
     """this is the class which maps process to host with 'small pattern'"""
+    """将应用部署在X维度上连续且长度只有X维度一半的，Y、Z维度上最远的两组硅元上。应用所占的终端个数是SmallLocater的一半，可以看作是半个SmallLocater所部署的应用。"""
     def __init__(self,name,location):
         super().__init__(name)
         self.location=location
@@ -138,6 +144,7 @@ class HalfLocater(Locater):
 
 class QuarterLocater(Locater):
     """this is the class which maps process to host with 'small pattern'"""
+    """将应用部署在X维度上连续且长度只有X维度四分之一的，Y、Z维度上最远的两组硅元上。应用所占的终端个数是SmallLocater的四分之一，可以看作是四分之一个SmallLocater所部署的应用。"""
     def __init__(self,name,location):
         super().__init__(name)
         self.location=location
@@ -248,6 +255,7 @@ class QuarterLocater(Locater):
 
 class NearSmallLocater(Locater):
     """this is the class which maps process to host with 'near small pattern'"""
+    """应用分布在两组X维度上连续，Y、Z维度上距离为1的硅元上。应用所占的终端个数与SmallLocater相同。"""
     def __init__(self,name):
         super().__init__(name)
     
@@ -277,6 +285,7 @@ class NearSmallLocater(Locater):
 
 class NearLargeLocater(Locater):
     """this is the class which maps process to host with 'large pattern'"""
+    """应用分布在四组X维度上连续，Y、Z维度上距离为1的硅元上。应用所占的终端个数与LargeLocater相同。"""
     def __init__(self,name):
         super().__init__(name)
 
@@ -314,6 +323,7 @@ class NearLargeLocater(Locater):
 ########################one job start########################
 class SmallLocaterOneJob(Locater):
     """this is the class which maps process to host with 'small pattern'"""
+    """网络中只有一个应用，该应用部署在两组X维度上连续且Y、Z维度上欧拉距离最远的硅元上"""
     def __init__(self,name):
         super().__init__(name)
     
@@ -323,9 +333,7 @@ class SmallLocaterOneJob(Locater):
         job_index=0            
         i=0
         j=0
-        # for i in range(0,dimensions[0]//2):  #z
-        #     for j in range(0,dimensions[1]):   #y
-                # load_moudle=LoadMoudle(filename)  
+
         base_index1=hosts.index(swports[i][j][0][0][0][0][0])
         farthest_i=(i+dimensions[0]//2)%dimensions[0]
         farthest_j=(j+dimensions[1]//2)%dimensions[1]
@@ -345,6 +353,7 @@ class SmallLocaterOneJob(Locater):
 
 class LargeLocaterOneJob(Locater):
     """this is the class which maps process to host with 'large pattern'"""
+    """网络中只有一个应用，该应用部署在将应用部署在X维度上连续，Y、Z维度上最远的四组硅元上.应用所占的终端个数是SmallLocaterOneJob的2倍，可以看作是两个SmallLocaterOneJob所部署的应用的组合"""
     def __init__(self,name):
         super().__init__(name)
 
@@ -353,8 +362,7 @@ class LargeLocaterOneJob(Locater):
         job_index=0     
         i=0
         j=0     
-        # for i in range(0,dimensions[0]//2):  #z
-        #     for j in range(0,dimensions[1]//2):   #y
+
         base_index1=hosts.index(swports[i][j][0][0][0][0][0])
         farthest_i=(i+dimensions[0]//2)%dimensions[0]
         farthest_j=(j+dimensions[1]//2)%dimensions[1]
@@ -382,6 +390,7 @@ class LargeLocaterOneJob(Locater):
 
 class HalfLocaterOneJob(Locater):
     """this is the class which maps process to host with 'small pattern'"""
+    """网络中只有一个应用，该应用部署在X维度上连续且长度只有X维度一半的，Y、Z维度上最远的两组硅元上。应用所占的终端个数是SmallLocaterOneJob的一半，可以看作是半个SmallLocaterOneJob所部署的应用。"""
     def __init__(self,name,location):
         super().__init__(name)
         self.location=location
@@ -398,10 +407,7 @@ class HalfLocaterOneJob(Locater):
         job_index=0 
         i=0
         j=0          
-        # for i in range(0,dimensions[0]//2):  #z
-        #     for j in range(0,dimensions[1]):   #y
-                #first half
-                # print('job :'+str(job_index)+'.1')
+
         location_x1=0       #location x is the start x coordinate of switch groups
         location_x2=dimensions[2]//2-self.location
         
@@ -422,33 +428,11 @@ class HalfLocaterOneJob(Locater):
                 index=idx%hostnum
                 jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
             # print(jobs[job_index][idx].coord)
-        job_index=job_index+1  
-
-                # #second half
-                # # print('job :'+str(job_index)+'.2')
-                # location_x1=dimensions[2]//2      #location x is the start x coordinate of switch groups
-                # location_x2=(0+dimensions[2]-self.location)%dimensions[2]
-                
-                # base_index1=hosts.index(swports[i][j][0][0][0][0][0])
-                # offset_index1=hosts.index(swports[i][j][location_x1][0][0][0][0])-base_index2
-                # farthest_i=(i+dimensions[0]//2)%dimensions[0]
-                # farthest_j=(j+dimensions[1]//2)%dimensions[1]
-                # base_index2=hosts.index(swports[farthest_i][farthest_j][0][0][0][0][0])
-                # offset_index2=hosts.index(swports[farthest_i][farthest_j][location_x2][0][0][0][0])-base_index2
-                # array=[]
-                # jobs.append(array)    
-                # for idx in range(0,proc_num):
-                #     if idx%(2*hostnum)<hostnum :          # 2 is the magic number for small pattern    
-                #         index=idx%hostnum  
-                #         jobs[job_index].append(hosts[base_index1+(index+offset_index1)%x_dimension_hostnum])
-                #     else:
-                #         index=idx%hostnum
-                #         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                #     # print(jobs[job_index][idx].coord)
-                # job_index=job_index+1              
+        job_index=job_index+1             
 
 class QuarterLocaterOneJob(Locater):
     """this is the class which maps process to host with 'small pattern'"""
+    """网络中只有一个应用，该应用部署在X维度上连续且长度只有X维度四分之一的，Y、Z维度上最远的两组硅元上。应用所占的终端个数是SmallLocaterOneJob的四分之一，可以看作是四分之一个SmallLocaterOneJob所部署的应用。"""
     def __init__(self,name,location):
         super().__init__(name)
         self.location=location
@@ -465,10 +449,7 @@ class QuarterLocaterOneJob(Locater):
         job_index=0  
         i=0
         j=0         
-        # for i in range(0,dimensions[0]//2):  #z
-        #     for j in range(0,dimensions[1]):   #y
-                #first half
-                # print('job :'+str(job_index)+'.1')
+
         location_x1=0       #location x is the start x coordinate of switch groups
         location_x2=dimensions[2]//2-self.location
         
@@ -488,79 +469,11 @@ class QuarterLocaterOneJob(Locater):
                 index=idx%hostnum
                 jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
             # print(jobs[job_index][idx].coord)
-        job_index=job_index+1  
-
-                # #second half
-                # # print('job :'+str(job_index)+'.2')
-                # location_x1=dimensions[2]//4     #location x is the start x coordinate of switch groups
-                # location_x2=dimensions[2]//2+dimensions[2]//4-self.location 
-                
-                # base_index1=hosts.index(swports[i][j][0][0][0][0][0])
-                # offset_index1=hosts.index(swports[i][j][location_x1][0][0][0][0])-base_index1
-                # farthest_i=(i+dimensions[0]//2)%dimensions[0]
-                # farthest_j=(j+dimensions[1]//2)%dimensions[1]
-                # base_index2=hosts.index(swports[farthest_i][farthest_j][0][0][0][0][0])
-                # offset_index2=hosts.index(swports[farthest_i][farthest_j][location_x2][0][0][0][0])-base_index2
-                # array=[]
-                # jobs.append(array)    
-                # for idx in range(0,proc_num):
-                #     if idx%(2*hostnum)<hostnum :          # 2 is the magic number for small pattern    
-                #         index=idx%hostnum  
-                #         jobs[job_index].append(hosts[base_index1+(index+offset_index1)%x_dimension_hostnum])
-                #     else:
-                #         index=idx%hostnum
-                #         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                #     # print(jobs[job_index][idx].coord)
-                # job_index=job_index+1  
-
-                # #third half
-                # # print('job :'+str(job_index)+'.3')
-                # location_x1=2*dimensions[2]//4     #location x is the start x coordinate of switch groups
-                # location_x2=(0+dimensions[2]-self.location)%dimensions[2] 
-                
-                # base_index1=hosts.index(swports[i][j][0][0][0][0][0])
-                # offset_index1=hosts.index(swports[i][j][location_x1][0][0][0][0])-base_index1
-                # farthest_i=(i+dimensions[0]//2)%dimensions[0]
-                # farthest_j=(j+dimensions[1]//2)%dimensions[1]
-                # base_index2=hosts.index(swports[farthest_i][farthest_j][0][0][0][0][0])
-                # offset_index2=hosts.index(swports[farthest_i][farthest_j][location_x2][0][0][0][0])-base_index2
-                # array=[]
-                # jobs.append(array)    
-                # for idx in range(0,proc_num):
-                #     if idx%(2*hostnum)<hostnum :          # 2 is the magic number for small pattern    
-                #         index=idx%hostnum  
-                #         jobs[job_index].append(hosts[base_index1+(index+offset_index1)%x_dimension_hostnum])
-                #     else:
-                #         index=idx%hostnum
-                #         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                #     # print(jobs[job_index][idx].coord)
-                # job_index=job_index+1   
-
-                # #forth half
-                # # print('job :'+str(job_index)+'.4')
-                # location_x1=3*dimensions[2]//4     #location x is the start x coordinate of switch groups
-                # location_x2=(dimensions[2]//4+dimensions[2]-self.location)%dimensions[2] 
-                
-                # base_index1=hosts.index(swports[i][j][0][0][0][0][0])
-                # offset_index1=hosts.index(swports[i][j][location_x1][0][0][0][0])-base_index1
-                # farthest_i=(i+dimensions[0]//2)%dimensions[0]
-                # farthest_j=(j+dimensions[1]//2)%dimensions[1]
-                # base_index2=hosts.index(swports[farthest_i][farthest_j][0][0][0][0][0])
-                # offset_index2=hosts.index(swports[farthest_i][farthest_j][location_x2][0][0][0][0])-base_index2
-                # array=[]
-                # jobs.append(array)    
-                # for idx in range(0,proc_num):
-                #     if idx%(2*hostnum)<hostnum :          # 2 is the magic number for small pattern    
-                #         index=idx%hostnum  
-                #         jobs[job_index].append(hosts[base_index1+(index+offset_index1)%x_dimension_hostnum])
-                #     else:
-                #         index=idx%hostnum
-                #         jobs[job_index].append(hosts[base_index2+(index+offset_index2)%x_dimension_hostnum])
-                #     # print(jobs[job_index][idx].coord)
-                # job_index=job_index+1            
+        job_index=job_index+1           
 
 class NearSmallLocaterOneJob(Locater):
     """this is the class which maps process to host with 'near small pattern'"""
+    """网络中只有一个应用，该应用分布在两组X维度上连续，Y、Z维度上距离为1的硅元上。应用所占的终端个数与SmallLocaterOneJob相同。"""
     def __init__(self,name):
         super().__init__(name)
     
@@ -570,9 +483,7 @@ class NearSmallLocaterOneJob(Locater):
         job_index=0
         i=0
         j=0            
-        # for i in range(0,dimensions[0],2):  #z
-        #     for j in range(0,dimensions[1]):   #y
-                # load_moudle=LoadMoudle(filename)  
+
         base_index1=hosts.index(swports[i][j][0][0][0][0][0])
         near_i=(i+1)%dimensions[0]
         near_j=(j+1)%dimensions[1]
@@ -592,6 +503,7 @@ class NearSmallLocaterOneJob(Locater):
 
 class NearLargeLocaterOneJob(Locater):
     """this is the class which maps process to host with 'large pattern'"""
+    """网络中只有一个应用，该应用分布在四组X维度上连续，Y、Z维度上距离为1的硅元上。应用所占的终端个数与LargeLocaterOneJob相同。"""
     def __init__(self,name):
         super().__init__(name)
 
@@ -600,8 +512,7 @@ class NearLargeLocaterOneJob(Locater):
         job_index=0 
         i=0
         j=0         
-        # for i in range(0,dimensions[0],2):  #z
-        #     for j in range(0,dimensions[1],2):   #y
+
         base_index1=hosts.index(swports[i][j][0][0][0][0][0])
         near_i=(i+1)%dimensions[0]
         near_j=(j+1)%dimensions[1]
@@ -627,3 +538,25 @@ class NearLargeLocaterOneJob(Locater):
             # print(jobs[job_index][proc_idx].coord)  
         job_index=job_index+1     
 ########################one job end########################
+
+
+#########################all start###########################
+class AllLocater(Locater):
+    """this is the class which maps process to host with 'all in one job'"""
+    """将应用部署在整个网络中"""
+    def __init__(self,name):
+        super().__init__(name)
+    
+    def locate(self,dimensions,hosts,swports,proc_num,jobs):
+        """maps process to host with 'small pattern'"""
+        hostnum=dimensions[0]*dimensions[1]*dimensions[2]*dimensions[3]*dimensions[4]*dimensions[5]
+        job_index=0            
+        base_index=hosts.index(swports[0][0][0][0][0][0][0])  
+        array=[]
+        jobs.append(array)    
+        # print('job:'+str(job_index))
+        for idx in range(0,proc_num):
+            index=idx%hostnum
+            jobs[job_index].append(hosts[base_index+index])
+            # print(jobs[job_index][idx].coord)
+#########################all stop###########################

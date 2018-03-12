@@ -1,9 +1,9 @@
 {
-"loadfile":"input/summary.log",
+"loadfile":"input/alltoall.log",
 "route":{
 	"name":"dorbiu",
-	"usedlinks":6,
-	"opticalweight":100
+	"usedlinks":1,
+	"opticalweight":1
 },
 "locater":{
 	"name":"LargeLocater",

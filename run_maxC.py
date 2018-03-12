@@ -455,66 +455,234 @@ import time
 #######################图12e end###########################
 
 ####################图12f start##############################
-temp_config={
-    "loadfile":"input/half/summary.log",
-    "route":{
-	    "name":"",
-        "usedlinks":6
-    },
-    "locater":{
-        "name":"HalfLocaterOneJob",
-        "location":0
-    },
-    "offset":0,
-    "dimensions":{
-        "z":8,
-        "y":6,
-        "x":8,
-        "b":3,
-        "c":2,
-        "a":2
-    },
-    "outputpath":""
-}
-location=[0,1,2,3]
-route=['dor','dorx']
-offset=[0,1,2,3]
-# outputpath=['utput/pattern/multigrid/dor/',]
-for temp_location in location:
-    temp_config['locater']['location']=temp_location
-    for route_name in route:
-        temp_config['route']['name']=route_name
+# temp_config={
+#     "loadfile":"input/half/summary.log",
+#     "route":{
+# 	    "name":"",
+#         "usedlinks":6
+#     },
+#     "locater":{
+#         "name":"HalfLocaterOneJob",
+#         "location":0
+#     },
+#     "offset":0,
+#     "dimensions":{
+#         "z":8,
+#         "y":6,
+#         "x":8,
+#         "b":3,
+#         "c":2,
+#         "a":2
+#     },
+#     "outputpath":""
+# }
+# location=[0,1,2,3]
+# route=['dor','dorx']
+# offset=[0,1,2,3]
+# # outputpath=['utput/pattern/multigrid/dor/',]
+# for temp_location in location:
+#     temp_config['locater']['location']=temp_location
+#     for route_name in route:
+#         temp_config['route']['name']=route_name
         
-        if route_name=='dorx':
-            for temp_offset in offset:
-                temp_config['offset']=temp_offset
+#         if route_name=='dorx':
+#             for temp_offset in offset:
+#                 temp_config['offset']=temp_offset
 
-                outputpath='output/图12f/'+'half'+"_"+'location'+str(temp_location)\
-                            +'_868_'+str(route_name)+'offset'+str(temp_offset)+'/'
-                temp_config['outputpath']=outputpath
+#                 outputpath='output/图12f/'+'half'+"_"+'location'+str(temp_location)\
+#                             +'_868_'+str(route_name)+'offset'+str(temp_offset)+'/'
+#                 temp_config['outputpath']=outputpath
 
-                with open('config/configure.txt','w') as config_file:
-                    json.dump(temp_config,config_file)
-                print(outputpath)
+#                 with open('config/configure.txt','w') as config_file:
+#                     json.dump(temp_config,config_file)
+#                 print(outputpath)
 
-                time.sleep(5)
+#                 time.sleep(5)
                 
-                loadconfig=LoadConfig('config/configure.txt')
-                topo=Topo(loadconfig)
-                topo.run()
-        else:
+#                 loadconfig=LoadConfig('config/configure.txt')
+#                 topo=Topo(loadconfig)
+#                 topo.run()
+#         else:
 
-            outputpath='output/图12f/'+'half'+"_"+'location'+str(temp_location)\
-                            +'_868_'+str(route_name)+'/'
-            temp_config['outputpath']=outputpath
+#             outputpath='output/图12f/'+'half'+"_"+'location'+str(temp_location)\
+#                             +'_868_'+str(route_name)+'/'
+#             temp_config['outputpath']=outputpath
 
+#             with open('config/configure.txt','w') as config_file:
+#                 json.dump(temp_config,config_file)
+#             print(outputpath)
+
+#             time.sleep(5)
+            
+#             loadconfig=LoadConfig('config/configure.txt')
+#             topo=Topo(loadconfig)
+#             topo.run()
+#######################图12f end###########################
+#######################pattern start ############################
+# config={
+# "loadfile":"input/summary.log",
+# "route":{
+# 	"name":"dorbiu",
+# 	"usedlinks":6,
+# 	"opticalweight":0
+# },
+# "locater":{
+# 	"name":"SmallLocater",
+# 	"location":0
+# },
+# "offset":0,
+# "dimensions":{
+# 	"z":8,
+# 	"y":6,
+# 	"x":8,
+# 	"c":2,
+# 	"b":3,
+# 	"a":2
+# },
+# "outputpath":"output/"
+# }
+
+# optical_weight=[-4,-3,-2,-1,0,1,2,3,4]
+# usedlinks=[1,2,3,4,6]
+# loadfile=[
+#             # 'input/pattern/cmc_multinode/summary.log',
+#             # 'input/pattern/1000/summary.log',
+#             # 'input/pattern/cns/summary.log',
+#             # 'input/pattern/df_AMG_n1728_dumpi/summary.log',
+#             # 'input/pattern/df_bigfft_n1024_dumpi/summary.log',
+#             # 'input/pattern/FillBoundary_n1000_dumpi/summary.log',
+#             # 'input/pattern/mocfe/summary.log',
+
+#             # 'input/pattern/multigrid/summary.log',
+#             # 'input/pattern/AMR_MiniApp_n1728_dumpi/summary.log',
+#              'input/pattern/lulesh/summary.log',
+#             # 'input/pattern/minife_1152/summary.log',
+#             # 'input/pattern/MultiGrid_C_n1000_dumpi/summary.log',
+#             #'input/pattern/nekbone/summary.log',
+#             #'input/pattern/df_bigfft_n1024_med_dumpi/summary.log'
+#             ]
+
+# ouputpath=[
+#             # 'output/pattern/cmc_multinode/dorbiu/',
+#             # 'output/pattern/1000/dorbiu/',
+#             # 'output/pattern/cns/dorbiu/',
+#             # 'output/pattern/df_AMG_n1728_dumpi/dorbiu/',
+#             # 'output/pattern/df_bigfft_n1024_dumpi/dorbiu/',
+#             # 'output/pattern/FillBoundary_n1000_dumpi/dorbiu/',
+#             # 'output/pattern/mocfe/dorbiu/',
+
+#             # 'output/pattern/multigrid/dorbiu/',
+#             # 'output/pattern/AMR_MiniApp_n1728_dumpi/dorbiu/',
+#              'output/pattern/lulesh/dorbiu/',
+#             # 'output/pattern/minife_1152/dorbiu/',
+#             # 'output/pattern/MultiGrid_C_n1000_dumpi/dorbiu/',
+#             #'output/pattern/nekbone/dorbiu/',
+#             #'output/pattern/df_bigfft_n1024_med_dumpi/dorbiu/',
+#         ]
+
+# for i in range(0,len(loadfile)):
+#     for j in range(0,len(usedlinks)):
+#         for k in range(0,len(optical_weight)):
+#             temp_config=config
+#             temp_config["loadfile"]=loadfile[i]
+#             temp_config["route"]["usedlinks"]=usedlinks[j]
+#             temp_config["route"]["opticalweight"]=optical_weight[k]
+#             temp_config["outputpath"]=ouputpath[i]+"usedlinks"+str(usedlinks[j])+"/"+"opticalweight"+str(optical_weight[k])+"/"
+#             # print(temp_config)
+#             with open('config/configure.txt','w') as config_file:
+#                 json.dump(temp_config,config_file)
+            
+#             # print(str(loadfile[i])+":"+str(usedlinks[j])+":"+str(optical_weight[k]))
+#             print(temp_config)
+
+#             time.sleep(5)
+
+#             loadconfig=LoadConfig('config/configure.txt')
+#             topo=Topo(loadconfig)
+#             topo.run()
+###############################pattern stop################################
+
+
+config={
+"loadfile":"input/summary.log",
+"route":{
+	"name":"dorbiu",
+	"usedlinks":6,
+	"opticalweight":0
+},
+"locater":{
+	"name":"SmallLocater",
+	"location":0
+},
+"offset":0,
+"dimensions":{
+	"z":8,
+	"y":6,
+	"x":8,
+	"c":2,
+	"b":3,
+	"a":2
+},
+"outputpath":"output/"
+}
+
+# optical_weight=[-4,-3,-2,-1,0,1,2,3,4]
+# usedlinks=[1,2,3,4,6]
+optical_weight=[1]
+usedlinks=[6]
+loadfile=[
+            # 'input/pattern/cmc_multinode/summary.log',
+            # 'input/pattern/1000/summary.log',
+            # 'input/pattern/cns/summary.log',
+            # 'input/pattern/df_AMG_n1728_dumpi/summary.log',
+            # 'input/pattern/df_bigfft_n1024_dumpi/summary.log',
+            # 'input/pattern/FillBoundary_n1000_dumpi/summary.log',
+            'input/pattern/mocfe/summary.log',
+
+            # 'input/pattern/multigrid/summary.log',
+            # 'input/pattern/AMR_MiniApp_n1728_dumpi/summary.log',
+            #  'input/pattern/lulesh/summary.log',
+            # 'input/pattern/minife_1152/summary.log',
+            # 'input/pattern/MultiGrid_C_n1000_dumpi/summary.log',
+            #'input/pattern/nekbone/summary.log',
+            #'input/pattern/df_bigfft_n1024_med_dumpi/summary.log'
+            ]
+
+ouputpath=[
+            # 'output/pattern/cmc_multinode/dorbiu/',
+            # 'output/pattern/1000/dorbiu/',
+            # 'output/pattern/cns/dorbiu/',
+            # 'output/pattern/df_AMG_n1728_dumpi/dorbiu/',
+            # 'output/pattern/df_bigfft_n1024_dumpi/dorbiu/',
+            # 'output/pattern/FillBoundary_n1000_dumpi/dorbiu/',
+            'output/pattern/mocfe/dorbiu/',
+
+            # 'output/pattern/multigrid/dorbiu/',
+            # 'output/pattern/AMR_MiniApp_n1728_dumpi/dorbiu/',
+            #  'output/pattern/lulesh/dorbiu/',
+            # 'output/pattern/minife_1152/dorbiu/',
+            # 'output/pattern/MultiGrid_C_n1000_dumpi/dorbiu/',
+            #'output/pattern/nekbone/dorbiu/',
+            #'output/pattern/df_bigfft_n1024_med_dumpi/dorbiu/',
+        ]
+
+for i in range(0,len(loadfile)):
+    for j in range(0,len(usedlinks)):
+        for k in range(0,len(optical_weight)):
+            temp_config=config
+            temp_config["loadfile"]=loadfile[i]
+            temp_config["route"]["usedlinks"]=usedlinks[j]
+            temp_config["route"]["opticalweight"]=optical_weight[k]
+            temp_config["outputpath"]=ouputpath[i]+"usedlinks"+str(usedlinks[j])+"/"+"opticalweight"+str(optical_weight[k])+"/"
+            # print(temp_config)
             with open('config/configure.txt','w') as config_file:
                 json.dump(temp_config,config_file)
-            print(outputpath)
+            
+            # print(str(loadfile[i])+":"+str(usedlinks[j])+":"+str(optical_weight[k]))
+            print(temp_config)
 
             time.sleep(5)
-            
+
             loadconfig=LoadConfig('config/configure.txt')
             topo=Topo(loadconfig)
             topo.run()
-#######################图12f end###########################

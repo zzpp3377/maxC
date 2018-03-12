@@ -1,3 +1,7 @@
+#############################
+#loadconfig.py
+#load the config file 
+#############################
 import json
 
 class LoadConfig():

@@ -1,4 +1,7 @@
-
+############################
+#path.py 
+#path moudle
+############################
 class Path():
     """the Path class presents the path of streams"""
 

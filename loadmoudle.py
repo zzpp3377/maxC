@@ -1,3 +1,7 @@
+###############################
+#loadmoudle.py 
+#load the traffic pattern file 
+###############################
 import re
 
 class LoadMoudle():
