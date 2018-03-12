@@ -1,5 +1,5 @@
 {
-"loadfile":"input/alltoall.log",
+"loadfile":"input/cubeAlltoall.log",
 "route":{
 	"name":"dorbiu",
 	"usedlinks":1,

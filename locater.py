@@ -2,6 +2,8 @@
 #locater.py 
 #locate algorithm
 ############################
+import pdb
+
 class Locater():
     """this is the class wihch maps process to host"""
     def __init__(self,name):
@@ -560,3 +562,51 @@ class AllLocater(Locater):
             jobs[job_index].append(hosts[base_index+index])
             # print(jobs[job_index][idx].coord)
 #########################all stop###########################
+#########################cube stop###########################
+class CubeLocater(Locater):
+    """this is the class which maps process to host with 'cube pattern'"""
+    """将应用部署在两个相距最远的长度为2的立方体上"""
+    def __init__(self,name):
+        super().__init__(name)
+    
+    def locate(self,dimensions,hosts,swports,proc_num,jobs):
+        """maps process to host with 'small pattern'"""
+        hostnum=dimensions[2]*dimensions[3]*dimensions[4]*dimensions[5]
+        job_index=0            
+        for job_z in range(0,dimensions[0]//2,2):  #z
+            for job_y in range(0,dimensions[1],2):   #y
+                for job_x in range(0,dimensions[2],2): #x
+                    host_in_this_job=[]
+                    for z in range(job_z,job_z+2):
+                        for y in range(job_y,job_y+2):
+                            for x in range(job_x,job_x+2):
+                                for b in range(0,3):
+                                    for c in range(0,2):
+                                        for a in range(0,2):
+                                            # pdb.set_trace()
+                                            host_in_this_job.append(swports[z%dimensions[0]][y%dimensions[1]][x%dimensions[2]][b%dimensions[3]][c%dimensions[4]][a%dimensions[5]][0])
+                    farthest_job_z=(job_z+dimensions[0]//2)%dimensions[0]
+                    farthest_job_y=(job_y+dimensions[1]//2)%dimensions[1]
+                    farthest_job_x=(job_x+dimensions[2]//2)%dimensions[2]
+                    for z in range(farthest_job_z,farthest_job_z+2):
+                        for y in range(farthest_job_y,farthest_job_y+2):
+                            for x in range(farthest_job_x,farthest_job_x+2):
+                                for b in range(0,3):
+                                    for c in range(0,2):
+                                        for a in range(0,2):
+                                            host_in_this_job.append(swports[z%dimensions[0]][y%dimensions[1]][x%dimensions[2]][b%dimensions[3]][c%dimensions[4]][a%dimensions[5]][0])
+                    this_job=[]
+                    print('job:'+str(job_index))
+                    for idx in range(0,proc_num):
+                        this_job.append(host_in_this_job[idx%len(host_in_this_job)])
+                    jobs.append(this_job)
+
+                    for idx in range(0,proc_num):
+                        print(jobs[job_index][idx].coord)
+                    
+                    job_index=job_index+1 
+
+
+
+
+

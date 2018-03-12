@@ -10,6 +10,7 @@ from path import Path
 from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
 from locater import SmallLocaterOneJob,LargeLocaterOneJob,HalfLocaterOneJob,QuarterLocaterOneJob,NearSmallLocaterOneJob,NearLargeLocaterOneJob
 from locater import AllLocater
+from locater import CubeLocater
 from loadconfig import LoadConfig
 import os
 
@@ -41,7 +42,9 @@ class Topo():
                         'QuarterLocaterOneJob':QuarterLocaterOneJob('QuarterLocaterOneJob',load_config.getLocaterLocation()),
                         'NearSmallLocaterOneJob':NearSmallLocaterOneJob('NearSmallLocaterOneJob'),
                         'NearLargeLocaterOneJob':NearLargeLocaterOneJob('NearLargeLocaterOneJob'),
+                        
                         'AllLocater':AllLocater('AllLocater'),
+                        'CubeLocater':CubeLocater('CubeLocater'),
                     }
         self.load_config=load_config
         #make topo
@@ -179,10 +182,12 @@ class Topo():
             print(swport.coord)
 
 
-# loadconfig=LoadConfig('config\configure.txt')
-# topo=Topo(loadconfig)
+loadconfig=LoadConfig('config\configure.txt')
+topo=Topo(loadconfig)
+print("start")
 # topo.run()
-# topo.locateJobs('AllLocater')
+topo.locateJobs('CubeLocater')
+print("end")
 # topo.testRoute()
 # print(topo.routes[0].name)
 # topo.allRoute()

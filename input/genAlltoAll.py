@@ -1,6 +1,6 @@
 
-proc_num=4608
-with open("alltoall.log","w") as output_file:
+proc_num=192
+with open("cubeAlltoall.log","w") as output_file:
     for src in range(0,proc_num):
         for dst in range(0,proc_num):
             if src!=dst:
