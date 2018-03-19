@@ -603,8 +603,22 @@ class CubeLocater(Locater):
 
                     # for idx in range(0,proc_num):
                     #     print(jobs[job_index][idx].coord)
-                    
+
                     job_index=job_index+1 
+        
+        # with open("cube_8_6_8.log","w") as outputfp:
+        #     for i in range(0,len(jobs)):
+        #         for j in range(0,len(jobs[i])):
+        #             sw=jobs[i][j]
+        #             y_len=dimensions[1]
+        #             x_len=dimensions[2]
+        #             b_len=dimensions[3]
+        #             c_len=dimensions[4]
+        #             a_len=dimensions[5]
+        #             si_len=b_len*c_len*a_len
+        #             nicIndex=sw.coord[0]*y_len*x_len*si_len+sw.coord[1]*x_len*si_len+sw.coord[2]*si_len+sw.coord[3]*c_len*a_len+sw.coord[4]*a_len+sw.coord[5]
+        #             outputfp.write(str(nicIndex)+"\t")
+        #         outputfp.write("\n")
 
 
 

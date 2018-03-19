@@ -602,16 +602,103 @@ import time
 #             topo.run()
 ###############################pattern stop################################
 
+###############################Cube Locater start################################
+# config={
+# "loadfile":"input/summary.log",
+# "route":{
+# 	"name":"dor",
+# 	"usedlinks":6,
+# 	"opticalweight":1
+# },
+# "locater":{
+# 	"name":"CubeLocater",
+# 	"location":0
+# },
+# "offset":0,
+# "dimensions":{
+# 	"z":8,
+# 	"y":6,
+# 	"x":8,
+# 	"c":2,
+# 	"b":3,
+# 	"a":2
+# },
+# "outputpath":"output/"
+# }
+
+# # optical_weight=[-4,-3,-2,-1,0,1,2,3,4]
+# # usedlinks=[1,2,3,4,6]
+# optical_weight=[1]
+# usedlinks=[6]
+# loadfile=[
+#             'input/pattern/cmc_multinode/summary.log',
+#             'input/pattern/1000/summary.log',
+#             'input/pattern/cns/summary.log',
+#             'input/pattern/df_AMG_n1728_dumpi/summary.log',
+#             'input/pattern/df_bigfft_n1024_dumpi/summary.log',
+#             'input/pattern/FillBoundary_n1000_dumpi/summary.log',
+#             'input/pattern/mocfe/summary.log',
+
+#             'input/pattern/multigrid/summary.log',
+#             'input/pattern/AMR_MiniApp_n1728_dumpi/summary.log',
+#              'input/pattern/lulesh/summary.log',
+#             'input/pattern/minife_1152/summary.log',
+#             'input/pattern/MultiGrid_C_n1000_dumpi/summary.log',
+#             'input/pattern/nekbone/summary.log',
+#             'input/pattern/df_bigfft_n1024_med_dumpi/summary.log'
+#             ]
+
+# ouputpath=[
+#             'output/pattern/cmc_multinode/dor/',
+#             'output/pattern/1000/dor/',
+#             'output/pattern/cns/dor/',
+#             'output/pattern/df_AMG_n1728_dumpi/dor/',
+#             'output/pattern/df_bigfft_n1024_dumpi/dor/',
+#             'output/pattern/FillBoundary_n1000_dumpi/dor/',
+#             'output/pattern/mocfe/dor/',
+
+#             'output/pattern/multigrid/dor/',
+#             'output/pattern/AMR_MiniApp_n1728_dumpi/dor/',
+#              'output/pattern/lulesh/dor/',
+#             'output/pattern/minife_1152/dor/',
+#             'output/pattern/MultiGrid_C_n1000_dumpi/dor/',
+#             'output/pattern/nekbone/dor/',
+#             'output/pattern/df_bigfft_n1024_med_dumpi/dor/',
+#         ]
+
+# for i in range(0,len(loadfile)):
+#     for j in range(0,len(usedlinks)):
+#         for k in range(0,len(optical_weight)):
+#             temp_config=config
+#             temp_config["loadfile"]=loadfile[i]
+#             temp_config["route"]["usedlinks"]=usedlinks[j]
+#             temp_config["route"]["opticalweight"]=optical_weight[k]
+#             temp_config["outputpath"]=ouputpath[i]+"usedlinks"+str(usedlinks[j])+"/"+"opticalweight"+str(optical_weight[k])+"/"
+#             # print(temp_config)
+#             with open('config/configure.txt','w') as config_file:
+#                 json.dump(temp_config,config_file)
+            
+#             # print(str(loadfile[i])+":"+str(usedlinks[j])+":"+str(optical_weight[k]))
+#             print(temp_config)
+
+#             time.sleep(5)
+
+#             loadconfig=LoadConfig('config/configure.txt')
+#             topo=Topo(loadconfig)
+#             topo.run()
+########################################Cube Locater stop##################################################
+
+
 
 config={
 "loadfile":"input/summary.log",
 "route":{
-	"name":"dorbiu",
+	"name":"dor",
 	"usedlinks":6,
-	"opticalweight":0
+	"opticalweight":1
 },
 "locater":{
-	"name":"SmallLocater",
+	"name":"CubeLocater",
 	"location":0
 },
 "offset":0,
@@ -631,39 +718,37 @@ config={
 optical_weight=[1]
 usedlinks=[6]
 loadfile=[
-            # 'input/pattern/cmc_multinode/summary.log',
-            # 'input/pattern/1000/summary.log',
-            # 'input/pattern/cns/summary.log',
-            # 'input/pattern/df_AMG_n1728_dumpi/summary.log',
-            # 'input/pattern/df_bigfft_n1024_dumpi/summary.log',
-            # 'input/pattern/FillBoundary_n1000_dumpi/summary.log',
-            'input/pattern/mocfe/summary.log',
+            'output/pattern_cube/locater/1000/traffic.log',
+            'output/pattern_cube/locater/AMR_MiniApp_n1728_dumpi/traffic.log',
+            'output/pattern_cube/locater/cmc_multinode/traffic.log',
+            'output/pattern_cube/locater/cns/traffic.log',
+            'output/pattern_cube/locater/df_AMG_n1728_dumpi/traffic.log',
+            'output/pattern_cube/locater/df_bigfft_n1024_med_dumpi/traffic.log',
+            'output/pattern_cube/locater/FillBoundary_n1000_dumpi/traffic.log',
 
-            # 'input/pattern/multigrid/summary.log',
-            # 'input/pattern/AMR_MiniApp_n1728_dumpi/summary.log',
-            #  'input/pattern/lulesh/summary.log',
-            # 'input/pattern/minife_1152/summary.log',
-            # 'input/pattern/MultiGrid_C_n1000_dumpi/summary.log',
-            #'input/pattern/nekbone/summary.log',
-            #'input/pattern/df_bigfft_n1024_med_dumpi/summary.log'
+            'output/pattern_cube/locater/lulesh/traffic.log',
+            'output/pattern_cube/locater/minife_1152/traffic.log',
+            'output/pattern_cube/locater/mocfe/traffic.log',
+            'output/pattern_cube/locater/multigrid/traffic.log',
+            'output/pattern_cube/locater/MultiGrid_C_n1000_dumpi/traffic.log',
+            'output/pattern_cube/locater/nekbone/traffic.log'
             ]
 
 ouputpath=[
-            # 'output/pattern/cmc_multinode/dorbiu/',
-            # 'output/pattern/1000/dorbiu/',
-            # 'output/pattern/cns/dorbiu/',
-            # 'output/pattern/df_AMG_n1728_dumpi/dorbiu/',
-            # 'output/pattern/df_bigfft_n1024_dumpi/dorbiu/',
-            # 'output/pattern/FillBoundary_n1000_dumpi/dorbiu/',
-            'output/pattern/mocfe/dorbiu/',
+            'output/pattern_cube/locater/1000/locater.log',
+            'output/pattern_cube/locater/AMR_MiniApp_n1728_dumpi/locater.log',
+            'output/pattern_cube/locater/cmc_multinode/locater.log',
+            'output/pattern_cube/locater/cns/locater.log',
+            'output/pattern_cube/locater/df_AMG_n1728_dumpi/locater.log',
+            'output/pattern_cube/locater/df_bigfft_n1024_med_dumpi/locater.log',
+            'output/pattern_cube/locater/FillBoundary_n1000_dumpi/locater.log',
 
-            # 'output/pattern/multigrid/dorbiu/',
-            # 'output/pattern/AMR_MiniApp_n1728_dumpi/dorbiu/',
-            #  'output/pattern/lulesh/dorbiu/',
-            # 'output/pattern/minife_1152/dorbiu/',
-            # 'output/pattern/MultiGrid_C_n1000_dumpi/dorbiu/',
-            #'output/pattern/nekbone/dorbiu/',
-            #'output/pattern/df_bigfft_n1024_med_dumpi/dorbiu/',
+            'output/pattern_cube/locater/lulesh/locater.log',
+            'output/pattern_cube/locater/minife_1152/locater.log',
+            'output/pattern_cube/locater/mocfe/locater.log',
+            'output/pattern_cube/locater/multigrid/locater.log',
+            'output/pattern_cube/locater/MultiGrid_C_n1000_dumpi/locater.log',
+            'output/pattern_cube/locater/nekbone/locater.log'
         ]
 
 for i in range(0,len(loadfile)):
@@ -685,4 +770,4 @@ for i in range(0,len(loadfile)):
 
             loadconfig=LoadConfig('config/configure.txt')
             topo=Topo(loadconfig)
-            topo.run()
+            topo.outLocater(ouputpath[i])

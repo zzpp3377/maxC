@@ -181,11 +181,28 @@ class Topo():
         for swport in path.swports:
             print(swport.coord)
 
+    def outLocater(self,outFileName):
+        """method to output the locater file"""
+        self.locateJobs(self.load_config.getLocaterName())
+        with open(outFileName,"w") as outputfp:
+            for i in range(0,len(self.jobs)):
+                for j in range(0,len(self.jobs[i])):
+                    sw=self.jobs[i][j]
+                    y_len=self.dimensions[1]
+                    x_len=self.dimensions[2]
+                    b_len=self.dimensions[3]
+                    c_len=self.dimensions[4]
+                    a_len=self.dimensions[5]
+                    si_len=b_len*c_len*a_len
+                    nicIndex=sw.coord[0]*y_len*x_len*si_len+sw.coord[1]*x_len*si_len+sw.coord[2]*si_len+sw.coord[3]*c_len*a_len+sw.coord[4]*a_len+sw.coord[5]
+                    outputfp.write(str(nicIndex)+"\t")
+                outputfp.write("\n")
 
-# loadconfig=LoadConfig('config\configure.txt')
-# topo=Topo(loadconfig)
-# print("start")
-# # topo.run()
+loadconfig=LoadConfig('config\configure.txt')
+topo=Topo(loadconfig)
+print("start")
+topo.outLocater("newCube.log")
+# topo.run()
 # topo.locateJobs('CubeLocater')
 # print("end")
 # topo.testRoute()
