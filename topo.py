@@ -10,8 +10,10 @@ from path import Path
 from locater import SmallLocater,LargeLocater,HalfLocater,QuarterLocater,NearSmallLocater,NearLargeLocater
 from locater import SmallLocaterOneJob,LargeLocaterOneJob,HalfLocaterOneJob,QuarterLocaterOneJob,NearSmallLocaterOneJob,NearLargeLocaterOneJob
 from locater import AllLocater
-from locater import CubeLocater
+from locater import CubeLocater,CubeCLocater
 from loadconfig import LoadConfig
+from opticalconnectmapper import FarthestMapper
+
 import os
 
 class Topo():
@@ -21,9 +23,15 @@ class Topo():
         """this dimensions must be a 6 elements list"""
         self.paths=[]
         self.dimensions=load_config.getDimensions()
-        self.routes={'dor':Dor('dor',self.dimensions),
-                        'dorbiu':DorBiu('dorbiu',self.dimensions,load_config.getRouteUsedLinks(),load_config.getOpticalWeight(),load_config.getOffset()),
-                        'dorx':Dorx('dorx',self.dimensions,load_config.getOffset())}
+        self.opticalConnectMap={}
+        self.opticalConnectMapper={
+            'FarthestMapper':FarthestMapper('FarthestMapper')
+        }
+        self.routes={
+                        'dor':Dor('dor',self.dimensions),
+                        'dorbiu':DorBiu('dorbiu',self.dimensions,load_config.getRouteUsedLinks(),load_config.getOpticalWeight(),load_config.getOffset(),self.opticalConnectMap),
+                        'dorx':Dorx('dorx',self.dimensions,load_config.getOffset(),self.opticalConnectMap)
+                    }
         self.swports=[]
         self.line_swports=[]
         self.hosts=[] 
@@ -45,8 +53,10 @@ class Topo():
                         
                         'AllLocater':AllLocater('AllLocater'),
                         'CubeLocater':CubeLocater('CubeLocater'),
+                        'CubeCLocater':CubeCLocater('CubeCLocater')
                     }
         self.load_config=load_config
+
         #make topo
         # this represent a 6d-torus
         for i in range(0,self.dimensions[0]):    #z
@@ -109,6 +119,7 @@ class Topo():
             self.updatePortLoad(path)
         # for swport in self.line_swports:
             # print('coordinate:'+str(swport.coord)+"\tload:"+str(swport.port_load))
+
     def getStatistics(self):
         """write statistics to output file"""
         histogram_electric={}
@@ -155,6 +166,8 @@ class Topo():
 
     def run(self):
         """method to call by main"""
+        self.generConnectMap(self.load_config.getOpticalMapperName())
+        print('generate connect map success!!!')
         self.locateJobs(self.load_config.getLocaterName())
         print('locate jobs success!!!')
         self.allRoute(self.load_config.getRouteName())
@@ -163,23 +176,6 @@ class Topo():
         print("update port load success!!!")
         self.getStatistics()
         print("get statistic success!!!")
-
-    def testRoute(self):
-        """method to test the route algorithm"""
-        # coord_src=[0,0,0,0,0,0,0]
-        # coord_dst=[7,4,3,2,0,1,1]
-        coord_src=[1,2,3,2,1,0,0]
-        coord_dst=[5,5,7,2,1,0,0]
-        # coord_src=[0, 0, 0, 2, 0, 0, 0]
-        # coord_dst=[0, 0, 0, 0, 0, 0, 0]
-        # coord_src=[0,0,2,0,0,0,0]
-        # coord_dst=[0,0,7,0,0,0,0]
-        load=1
-        # path=self.routes['dor'].routing(coord_src,coord_dst,load,self.swports)
-        path=self.routes['dorbiu'].routing(coord_src,coord_dst,load,self.swports)
-        # path=self.routes['dorx'].routing(coord_src,coord_dst,load,self.swports)
-        for swport in path.swports:
-            print(swport.coord)
 
     def outLocater(self,outFileName):
         """method to output the locater file"""
@@ -198,10 +194,55 @@ class Topo():
                     outputfp.write(str(nicIndex)+"\t")
                 outputfp.write("\n")
 
-loadconfig=LoadConfig('config\configure.txt')
-topo=Topo(loadconfig)
-print("start")
-topo.outLocater("newCube.log")
+    def generConnectMap(self,mapperName):
+        """record optical information"""
+        self.opticalConnectMapper[mapperName].record(self.dimensions,self.opticalConnectMap)
+
+    def outConnectMap(self,outFileNmae):
+        """method to output optical information"""
+        with open(outFileNmae,'w') as filep: 
+            for i in range(0,self.dimensions[0]):
+                for j in range(0,self.dimensions[1]):
+                    for k in range(0,self.dimensions[2]):
+                        key=(i,j,k)
+                        value=self.opticalConnectMap[key]
+                        print(str(key)+"<-->"+str(value))
+                        filep.write(str(i)+"\t"+str(j)+"\t"+str(k)+"\t"+str(value[0])+"\t"+str(value[1])+"\t"+str(value[2])+"\t"+"\n")
+
+    def testRoute(self):
+        """method to test the route algorithm"""
+        # coord_src=[0,0,0,0,0,0,0]
+        # coord_dst=[7,4,3,2,0,1,1]
+        # coord_src=[1,2,3,2,1,0,0]
+        # coord_dst=[5,5,7,2,1,0,0]
+        # coord_src=[0, 0, 0, 2, 0, 0, 0]
+        # coord_dst=[0, 0, 0, 0, 0, 0, 0]
+        # coord_src=[0,0,2,0,0,0,0]
+        # coord_dst=[0,0,7,0,0,0,0]
+        coord_src=[0,0,0,0,0,0,0]
+        coord_dst=[4,3,4,0,0,0,0]
+        load=1
+        # path=self.routes['dor'].routing(coord_src,coord_dst,load,self.swports)
+        path=self.routes['dorbiu'].routing(coord_src,coord_dst,load,self.swports)
+        # path=self.routes['dorx'].routing(coord_src,coord_dst,load,self.swports)
+        for swport in path.swports:
+            print(swport.coord)
+
+
+
+
+# loadconfig=LoadConfig('config\configure.txt')
+# topo=Topo(loadconfig)
+# print("start")
+# topo.generConnectMap("FarthestMapper")
+# outFileName="output/optical_connect/farthest/connect_map.log"
+# topo.outConnectMap(outFileName)
+
+# topo.testRoute()
+# for ele in topo.opticalConnectMap.keys():
+#     print(str(topo.opticalConnectMap[ele]))
+
+# topo.outLocater("newCube.log")
 # topo.run()
 # topo.locateJobs('CubeLocater')
 # print("end")
@@ -214,3 +255,4 @@ topo.outLocater("newCube.log")
 # print(list1)
 
 # print(sorted(my_map.keys()))
+

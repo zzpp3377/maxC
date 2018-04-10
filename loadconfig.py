@@ -56,6 +56,9 @@ class LoadConfig():
 
     def getOpticalWeight(self):
         return self.config_param['route']['opticalweight']
+    
+    def getOpticalMapperName(self):
+        return self.config_param['opticalconnectmapper']
 
 
 
